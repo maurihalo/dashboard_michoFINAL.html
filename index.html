@@ -456,24 +456,6 @@
     transition: width 1s ease;
   }
 
-  /* ─── Tabs ─── */
-  .tabs { display: flex; gap: 4px; margin-bottom: 20px; flex-wrap: wrap; }
-  .tab-btn {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    padding: 6px 14px;
-    border-radius: 6px;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--muted);
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .tab-btn.active, .tab-btn:hover { background: var(--surface); color: var(--text); border-color: rgba(255,255,255,0.15); }
-  .tab-btn.active { border-color: var(--gold); color: var(--gold); }
-
   /* Animations */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
@@ -829,7 +811,8 @@
         <div class="a-dot chpp"></div>
         <h3>Chile Pepe SA de CV</h3>
       </div>
-      <p><span class="highlight neu">Empresa ancla del grupo.</span> Con ingresos acumulados de <span class="highlight">$102.6M</span> es la empresa más grande en volumen de ventas, representando el 61.5% del ingreso consolidado del grupo.</p>
+      <!-- ✅ CORRECCIÓN: 62.9% en lugar de 61.5% -->
+      <p><span class="highlight neu">Empresa ancla del grupo.</span> Con ingresos acumulados de <span class="highlight">$102.6M</span> es la empresa más grande en volumen de ventas, representando el 62.9% del ingreso consolidado del grupo.</p>
       <p>Su razón corriente de <span class="highlight pos">1.52x</span> indica buena cobertura de pasivos a corto plazo. Sin embargo, su relación deuda/activo del <span class="highlight neu">65.7%</span> indica dependencia moderada de financiamiento externo.</p>
       <p>La utilidad neta de <span class="highlight pos">$4.9M (4.77%)</span> es positiva aunque su mes de diciembre resultó con pérdida de <span class="highlight neg">$12.6M</span>, lo que sugiere estacionalidad o gastos extraordinarios en el cierre.</p>
       <p>El <span class="highlight">capital social de $28.6M</span> provee una base sólida. Se recomienda monitorear la razón deuda/capital (1.91x) y reducir pasivos con proveedores ($48.3M) que son la principal exposición.</p>
@@ -872,7 +855,8 @@
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;">
         <div class="kpi">
           <div class="label">Ingresos Totales</div>
-          <div class="val" style="font-size:1.4rem;">$162.1M</div>
+          <!-- ✅ CORRECCIÓN: $163.1M en lugar de $162.1M -->
+          <div class="val" style="font-size:1.4rem;">$163.1M</div>
           <div class="sub neu">— Grupo Micho 2025</div>
         </div>
         <div class="kpi">
@@ -1146,11 +1130,11 @@ new Chart(document.getElementById('chartEgresoChpp'), {
   }
 });
 
-// 10. Consolidado
+// 10. Consolidado — ✅ CORRECCIÓN: porcentajes corregidos (62.9%, 35.1%, 2.0%)
 new Chart(document.getElementById('chartConsol'), {
   type: 'doughnut',
   data: {
-    labels: ['Chile Pepe $102.6M (63.3%)', 'Dulces Micho $57.2M (35.3%)', 'Transformadora $3.3M (2.0%)'],
+    labels: ['Chile Pepe $102.6M (62.9%)', 'Dulces Micho $57.2M (35.1%)', 'Transformadora $3.3M (2.0%)'],
     datasets: [{
       data: [102.62, 57.19, 3.31],
       backgroundColor: ['rgba(232,184,75,0.85)', 'rgba(94,200,160,0.85)', 'rgba(232,107,94,0.85)'],
