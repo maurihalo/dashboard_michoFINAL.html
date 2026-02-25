@@ -24,753 +24,321 @@
     --gold: #c9a227;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Outfit', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+  body { background: var(--bg); color: var(--text); font-family: 'Outfit', sans-serif; min-height: 100vh; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; opacity: 0.6; }
 
-  /* ─── Noise texture overlay ─── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0.6;
-  }
-
-  /* ─── Header ─── */
-  .header {
-    padding: 44px 60px 32px;
-    border-bottom: 1px solid var(--border);
-    position: relative;
-    overflow: hidden;
-  }
-  .header::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0; height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  }
-  .header-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 24px;
-    margin-bottom: 32px;
-  }
-  .brand h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    font-weight: 900;
-    letter-spacing: -0.5px;
-    color: #fff;
-    line-height: 1;
-  }
+  .header { padding: 44px 60px 32px; border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+  .header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+  .header-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 24px; margin-bottom: 32px; }
+  .brand h1 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; letter-spacing: -0.5px; color: #fff; line-height: 1; }
   .brand h1 span { color: var(--gold); }
-  .brand p {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--muted);
-    margin-top: 6px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-  .date-badge {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 10px 18px;
-    text-align: right;
-  }
-  .date-badge .label {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--muted);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-  .date-badge .value {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--gold);
-    margin-top: 2px;
-  }
+  .brand p { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted); margin-top: 6px; letter-spacing: 2px; text-transform: uppercase; }
+  .brand .presented { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--gold); margin-top: 4px; letter-spacing: 1.5px; }
+  .date-badge { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 10px 18px; text-align: right; }
+  .date-badge .label { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+  .date-badge .value { font-size: 0.9rem; font-weight: 600; color: var(--gold); margin-top: 2px; }
 
-  /* ─── Timeline ─── */
-  .timeline {
-    display: flex;
-    align-items: center;
-    gap: 0;
-    overflow-x: auto;
-    padding-bottom: 4px;
-  }
-  .timeline::-webkit-scrollbar { height: 3px; }
-  .timeline::-webkit-scrollbar-track { background: transparent; }
-  .timeline::-webkit-scrollbar-thumb { background: var(--border); }
-  .t-company {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 180px;
-  }
-  .t-badge {
-    padding: 6px 14px;
-    border-radius: 4px;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    font-weight: 500;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    border: 1px solid;
-  }
+  .timeline { display: flex; align-items: center; gap: 0; overflow-x: auto; padding-bottom: 4px; }
+  .t-company { display: flex; flex-direction: column; align-items: center; min-width: 180px; }
+  .t-badge { padding: 6px 14px; border-radius: 4px; font-family: 'DM Mono', monospace; font-size: 0.65rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; border: 1px solid; }
   .t-badge.chpp { background: var(--chpp-dim); border-color: var(--chpp); color: var(--chpp); }
-  .t-badge.dm   { background: var(--dm-dim);   border-color: var(--dm);   color: var(--dm); }
-  .t-badge.tin  { background: var(--tin-dim);  border-color: var(--tin);  color: var(--tin); }
-  .t-date {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--muted);
-    margin-top: 5px;
-  }
-  .t-arrow {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    min-width: 60px;
-    position: relative;
-  }
-  .t-line {
-    height: 2px;
-    flex: 1;
-  }
+  .t-badge.dm { background: var(--dm-dim); border-color: var(--dm); color: var(--dm); }
+  .t-badge.tin { background: var(--tin-dim); border-color: var(--tin); color: var(--tin); }
+  .t-date { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--muted); margin-top: 5px; }
+  .t-arrow { flex: 1; display: flex; align-items: center; min-width: 60px; }
+  .t-line { height: 2px; flex: 1; }
   .t-line.to-dm { background: linear-gradient(90deg, var(--chpp), var(--dm)); }
   .t-line.to-tin { background: linear-gradient(90deg, var(--dm), var(--tin)); }
-  .t-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-  .t-dot.chpp { background: var(--chpp); }
-  .t-dot.dm   { background: var(--dm); }
-  .t-dot.tin  { background: var(--tin); }
+  .t-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .t-dot.chpp { background: var(--chpp); } .t-dot.dm { background: var(--dm); } .t-dot.tin { background: var(--tin); }
 
-  /* ─── Main ─── */
-  main {
-    padding: 40px 60px 60px;
-    max-width: 1600px;
-    margin: 0 auto;
-  }
+  main { padding: 40px 60px 60px; max-width: 1600px; margin: 0 auto; }
+  .section-label { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
 
-  /* ─── Section label ─── */
-  .section-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 16px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  /* ─── Company cards ─── */
-  .company-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-bottom: 40px;
-  }
-  .company-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .company-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
-  }
-  .company-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-  }
+  .company-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; }
+  .company-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; position: relative; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+  .company-card:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
+  .company-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
   .company-card.chpp::before { background: var(--chpp); }
-  .company-card.dm::before   { background: var(--dm); }
-  .company-card.tin::before  { background: var(--tin); }
-
-  .card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 20px;
-  }
-  .card-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 1rem;
-    font-weight: 700;
-    color: #fff;
-    line-height: 1.3;
-    max-width: 180px;
-  }
-  .card-code {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--muted);
-    margin-top: 2px;
-  }
-  .status-chip {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
-    padding: 3px 8px;
-    border-radius: 20px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    flex-shrink: 0;
-  }
+  .company-card.dm::before { background: var(--dm); }
+  .company-card.tin::before { background: var(--tin); }
+  .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+  .card-name { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: #fff; line-height: 1.3; max-width: 180px; }
+  .card-code { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--muted); margin-top: 2px; }
+  .status-chip { font-family: 'DM Mono', monospace; font-size: 0.6rem; padding: 3px 8px; border-radius: 20px; letter-spacing: 1px; text-transform: uppercase; flex-shrink: 0; }
   .status-chip.healthy { background: rgba(94,200,160,0.15); color: var(--dm); border: 1px solid rgba(94,200,160,0.3); }
   .status-chip.caution { background: rgba(232,184,75,0.15); color: var(--chpp); border: 1px solid rgba(232,184,75,0.3); }
-  .status-chip.alert   { background: rgba(232,107,94,0.15); color: var(--tin); border: 1px solid rgba(232,107,94,0.3); }
+  .status-chip.alert { background: rgba(232,107,94,0.15); color: var(--tin); border: 1px solid rgba(232,107,94,0.3); }
 
-  .kpi-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-  .kpi {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px 14px;
-  }
-  .kpi .label {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.58rem;
-    color: var(--muted);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-  .kpi .val {
-    font-size: 1rem;
-    font-weight: 700;
-    color: #fff;
-    line-height: 1;
-  }
-  .kpi .sub {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
-    margin-top: 3px;
-  }
-  .kpi .sub.pos { color: var(--dm); }
-  .kpi .sub.neg { color: var(--tin); }
-  .kpi .sub.neu { color: var(--muted); }
+  .kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .kpi { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+  .kpi .label { font-family: 'DM Mono', monospace; font-size: 0.58rem; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+  .kpi .val { font-size: 1rem; font-weight: 700; color: #fff; line-height: 1; }
+  .kpi .sub { font-family: 'DM Mono', monospace; font-size: 0.6rem; margin-top: 3px; }
+  .kpi .sub.pos { color: var(--dm); } .kpi .sub.neg { color: var(--tin); } .kpi .sub.neu { color: var(--muted); }
   .kpi-full { grid-column: 1 / -1; }
 
-  /* ─── Charts grid ─── */
-  .charts-row {
-    display: grid;
-    gap: 20px;
-    margin-bottom: 40px;
-  }
+  .charts-row { display: grid; gap: 20px; margin-bottom: 40px; }
   .charts-row.cols-2 { grid-template-columns: 1fr 1fr; }
   .charts-row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
   .charts-row.cols-21 { grid-template-columns: 2fr 1fr; }
 
-  .chart-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    position: relative;
-  }
-  .chart-card .title {
-    font-family: 'Playfair Display', serif;
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 4px;
-  }
-  .chart-card .subtitle {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--muted);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-  }
-  .chart-wrap {
-    position: relative;
-  }
+  .chart-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; position: relative; }
+  .chart-card .title { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .chart-card .subtitle { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 20px; }
+  .chart-wrap { position: relative; }
 
-  /* ─── Ratios table ─── */
-  .ratio-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  .ratio-table th {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--muted);
-    text-align: left;
-    padding: 8px 12px;
-    border-bottom: 1px solid var(--border);
-  }
-  .ratio-table td {
-    padding: 10px 12px;
-    font-size: 0.85rem;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-    vertical-align: middle;
-  }
+  .ratio-table { width: 100%; border-collapse: collapse; }
+  .ratio-table th { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+  .ratio-table td { padding: 8px 10px; font-size: 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: middle; }
   .ratio-table tr:last-child td { border-bottom: none; }
-  .ratio-table .ratio-name {
-    font-weight: 600;
-    color: var(--text);
-  }
-  .ratio-table .ratio-val {
-    font-family: 'DM Mono', monospace;
-    font-weight: 500;
-  }
-  .ratio-table .ratio-val.chpp { color: var(--chpp); }
-  .ratio-table .ratio-val.dm   { color: var(--dm); }
-  .ratio-table .ratio-val.tin  { color: var(--tin); }
-  .ratio-table .indicator {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
-    padding: 2px 7px;
-    border-radius: 10px;
-  }
+  .ratio-table .ratio-name { font-weight: 600; color: var(--text); }
+  .ratio-table .ratio-val { font-family: 'DM Mono', monospace; font-weight: 500; }
+  .ratio-table .ratio-val.chpp { color: var(--chpp); } .ratio-table .ratio-val.dm { color: var(--dm); } .ratio-table .ratio-val.tin { color: var(--tin); }
+  .ratio-table .sano { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--accent); background: rgba(61,127,255,0.08); padding: 2px 6px; border-radius: 4px; white-space: nowrap; }
+  .indicator { display: inline-flex; align-items: center; gap: 4px; font-family: 'DM Mono', monospace; font-size: 0.6rem; padding: 2px 7px; border-radius: 10px; }
   .indicator.good { background: rgba(94,200,160,0.15); color: var(--dm); }
   .indicator.warn { background: rgba(232,184,75,0.15); color: var(--chpp); }
-  .indicator.bad  { background: rgba(232,107,94,0.15); color: var(--tin); }
+  .indicator.bad { background: rgba(232,107,94,0.15); color: var(--tin); }
 
-  /* ─── Analysis block ─── */
-  .analysis-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 20px;
-    margin-bottom: 40px;
-  }
-  .analysis-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-  }
-  .analysis-card .a-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 16px;
-  }
-  .a-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-  .a-dot.chpp { background: var(--chpp); }
-  .a-dot.dm   { background: var(--dm); }
-  .a-dot.tin  { background: var(--tin); }
-  .analysis-card .a-header h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 0.95rem;
-    color: #fff;
-  }
-  .analysis-card p {
-    font-size: 0.8rem;
-    line-height: 1.7;
-    color: var(--muted);
-    margin-bottom: 10px;
-  }
+  .analysis-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 40px; }
+  .analysis-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; }
+  .analysis-card .a-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .a-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .a-dot.chpp { background: var(--chpp); } .a-dot.dm { background: var(--dm); } .a-dot.tin { background: var(--tin); }
+  .analysis-card .a-header h3 { font-family: 'Playfair Display', serif; font-size: 0.95rem; color: #fff; }
+  .analysis-card p { font-size: 0.8rem; line-height: 1.7; color: var(--muted); margin-bottom: 10px; }
   .analysis-card p:last-child { margin-bottom: 0; }
-  .highlight {
-    color: var(--text);
-    font-weight: 600;
-  }
-  .highlight.pos { color: var(--dm); }
-  .highlight.neg { color: var(--tin); }
-  .highlight.neu { color: var(--chpp); }
+  .highlight { color: var(--text); font-weight: 600; }
+  .highlight.pos { color: var(--dm); } .highlight.neg { color: var(--tin); } .highlight.neu { color: var(--chpp); }
 
-  /* ─── Footer ─── */
-  footer {
-    padding: 24px 60px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-  footer p {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--muted);
-    letter-spacing: 1px;
-  }
-  .legend {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-  }
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--muted);
-    letter-spacing: 1px;
-  }
-  .legend-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-  }
+  /* ─── NEW: Ops table ─── */
+  .ops-table { width: 100%; border-collapse: collapse; }
+  .ops-table th { font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); text-align: right; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+  .ops-table th:first-child { text-align: left; }
+  .ops-table td { padding: 9px 10px; font-size: 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.04); text-align: right; font-family: 'DM Mono', monospace; }
+  .ops-table td:first-child { text-align: left; font-family: 'Outfit', sans-serif; font-weight: 600; color: var(--text); }
+  .ops-table .section-row td { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); padding-top: 14px; font-weight: 400; }
 
-  /* ─── Bar progress ─── */
-  .bar-progress {
-    width: 100%;
-    height: 6px;
-    background: rgba(255,255,255,0.06);
-    border-radius: 3px;
-    overflow: hidden;
-    margin-top: 6px;
-  }
-  .bar-fill {
-    height: 100%;
-    border-radius: 3px;
-    transition: width 1s ease;
-  }
+  /* ─── NEW: Valuation cards ─── */
+  .val-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 12px; }
+  .val-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .val-card .vc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .val-card .vc-name { font-family: 'Playfair Display', serif; font-size: 0.85rem; color: #fff; font-weight: 700; }
+  .val-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .val-row:last-child { border-bottom: none; }
+  .val-row .vl { font-size: 0.7rem; color: var(--muted); }
+  .val-row .vv { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--text); font-weight: 500; }
 
-  /* Animations */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  .company-card, .chart-card, .analysis-card {
-    animation: fadeUp 0.5s ease backwards;
-  }
-  .company-card:nth-child(1) { animation-delay: 0.1s; }
-  .company-card:nth-child(2) { animation-delay: 0.2s; }
-  .company-card:nth-child(3) { animation-delay: 0.3s; }
+  /* ─── NEW: Glossary ─── */
+  .glossary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px; }
+  .gloss-item { display: flex; gap: 8px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .gloss-term { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--gold); font-weight: 500; min-width: 110px; flex-shrink: 0; }
+  .gloss-def { font-size: 0.75rem; color: var(--muted); line-height: 1.5; }
+
+  /* ─── NEW: Scenario card ─── */
+  .scenario-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 12px; }
+  .sc-item { display: flex; align-items: flex-start; gap: 8px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .sc-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+  .sc-text { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+  .sc-text strong { color: var(--text); font-weight: 600; }
+
+  .bar-progress { width: 100%; height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; margin-top: 6px; }
+  .bar-fill { height: 100%; border-radius: 3px; transition: width 1s ease; }
+
+  footer { padding: 24px 60px; border-top: 1px solid var(--border); }
+  footer .footer-main { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  footer p { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 1px; }
+  .legend { display: flex; gap: 20px; align-items: center; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--muted); letter-spacing: 1px; }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .privacy-notice { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); font-family: 'DM Mono', monospace; font-size: 0.55rem; color: rgba(90,96,112,0.6); line-height: 1.6; max-width: 800px; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .company-card, .chart-card, .analysis-card { animation: fadeUp 0.5s ease backwards; }
+  .company-card:nth-child(1) { animation-delay: 0.1s; } .company-card:nth-child(2) { animation-delay: 0.2s; } .company-card:nth-child(3) { animation-delay: 0.3s; }
 
   @media (max-width: 1100px) {
-    main { padding: 24px 24px 48px; }
-    .header { padding: 28px 24px 24px; }
-    .company-cards, .analysis-grid { grid-template-columns: 1fr; }
+    main { padding: 24px 24px 48px; } .header { padding: 28px 24px 24px; }
+    .company-cards, .analysis-grid, .val-grid { grid-template-columns: 1fr; }
     .charts-row.cols-2, .charts-row.cols-3, .charts-row.cols-21 { grid-template-columns: 1fr; }
+    .glossary-grid, .scenario-row { grid-template-columns: 1fr; }
     footer { padding: 20px 24px; }
   }
 </style>
 </head>
 <body>
 
-<!-- ─── HEADER ─── -->
 <header class="header">
   <div class="header-top">
     <div class="brand">
       <h1>Grupo <span>Micho</span></h1>
       <p>Análisis Financiero Consolidado &bull; Al 31 de Diciembre 2025</p>
+      <div class="presented">Presentado por Flexder Corporativo</div>
     </div>
     <div class="date-badge">
       <div class="label">Generado</div>
       <div class="value">04 Feb 2026</div>
     </div>
   </div>
-
-  <!-- Timeline -->
   <div class="timeline">
-    <div class="t-company">
-      <div class="t-badge chpp">Chile Pepe SA de CV</div>
-      <div class="t-date">08 / Nov / 2008</div>
-    </div>
-    <div class="t-arrow">
-      <div class="t-dot chpp"></div>
-      <div class="t-line to-dm"></div>
-    </div>
-    <div class="t-company">
-      <div class="t-badge dm">Dulces Micho SA de CV</div>
-      <div class="t-date">07 / Jul / 2007</div>
-    </div>
-    <div class="t-arrow">
-      <div class="t-line to-tin"></div>
-      <div class="t-dot tin"></div>
-    </div>
-    <div class="t-company">
-      <div class="t-badge tin">Transformadora Integral SA de CV</div>
-      <div class="t-date">10 / Ago / 2010</div>
-    </div>
+    <div class="t-company"><div class="t-badge chpp">Chile Pepe SA de CV</div><div class="t-date">08 / Nov / 2008</div></div>
+    <div class="t-arrow"><div class="t-dot chpp"></div><div class="t-line to-dm"></div></div>
+    <div class="t-company"><div class="t-badge dm">Dulces Micho SA de CV</div><div class="t-date">07 / Jul / 2007</div></div>
+    <div class="t-arrow"><div class="t-line to-tin"></div><div class="t-dot tin"></div></div>
+    <div class="t-company"><div class="t-badge tin">Transformadora Integral SA de CV</div><div class="t-date">10 / Ago / 2010</div></div>
   </div>
 </header>
 
 <main>
 
-  <!-- ─── COMPANY CARDS ─── -->
+  <!-- ═══ COMPANY CARDS ═══ -->
   <div class="section-label">Panorama General por Empresa</div>
   <div class="company-cards">
-
-    <!-- CHPP -->
     <div class="company-card chpp">
-      <div class="card-header">
-        <div>
-          <div class="card-name">Chile Pepe SA de CV</div>
-          <div class="card-code">CHPP &bull; CLAVE</div>
-        </div>
-        <div class="status-chip caution">Estable</div>
-      </div>
+      <div class="card-header"><div><div class="card-name">Chile Pepe SA de CV</div><div class="card-code">CHPP &bull; CLAVE</div></div><div class="status-chip caution">Estable</div></div>
       <div class="kpi-grid">
-        <div class="kpi kpi-full">
-          <div class="label">Ingresos Acumulados 2025</div>
-          <div class="val">$102.6M</div>
-          <div class="sub pos">↑ Mayor empresa del grupo</div>
-        </div>
-        <div class="kpi">
-          <div class="label">Total Activo</div>
-          <div class="val">$83.3M</div>
-          <div class="sub neu">— 100% circulante</div>
-        </div>
-        <div class="kpi">
-          <div class="label">Utilidad Neta</div>
-          <div class="val">$4.9M</div>
-          <div class="sub pos">↑ 4.77% margen</div>
-        </div>
-        <div class="kpi">
-          <div class="label">Total Pasivo</div>
-          <div class="val">$54.7M</div>
-          <div class="sub neg">↓ 65.7% del activo</div>
-        </div>
-        <div class="kpi">
-          <div class="label">Capital</div>
-          <div class="val">$28.6M</div>
-          <div class="sub pos">↑ Sólido</div>
-        </div>
+        <div class="kpi kpi-full"><div class="label">Ingresos Acumulados 2025</div><div class="val">$102.6M</div><div class="sub pos">↑ Mayor empresa del grupo</div></div>
+        <div class="kpi"><div class="label">Total Activo</div><div class="val">$83.3M</div><div class="sub neu">— 100% circulante</div></div>
+        <div class="kpi"><div class="label">Utilidad Neta</div><div class="val">$4.9M</div><div class="sub pos">↑ 4.77% margen</div></div>
+        <div class="kpi"><div class="label">Total Pasivo</div><div class="val">$54.7M</div><div class="sub neg">↓ 65.7% del activo</div></div>
+        <div class="kpi"><div class="label">Capital</div><div class="val">$28.6M</div><div class="sub pos">↑ Sólido</div></div>
       </div>
-      <div style="margin-top:14px;">
-        <div style="font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--muted);margin-bottom:4px;">COBERTURA ACTIVO/PASIVO</div>
-        <div class="bar-progress"><div class="bar-fill" style="width:65.7%;background:var(--chpp);"></div></div>
-      </div>
+      <div style="margin-top:14px;"><div style="font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--muted);margin-bottom:4px;">COBERTURA ACTIVO/PASIVO</div><div class="bar-progress"><div class="bar-fill" style="width:65.7%;background:var(--chpp);"></div></div></div>
     </div>
-
-    <!-- DM -->
     <div class="company-card dm">
-      <div class="card-header">
-        <div>
-          <div class="card-name">Dulces Micho SA de CV</div>
-          <div class="card-code">DM &bull; CLAVE</div>
-        </div>
-        <div class="status-chip caution">Vigilar</div>
-      </div>
+      <div class="card-header"><div><div class="card-name">Dulces Micho SA de CV</div><div class="card-code">DM &bull; CLAVE</div></div><div class="status-chip caution">Vigilar</div></div>
       <div class="kpi-grid">
-        <div class="kpi kpi-full">
-          <div class="label">Ingresos Acumulados 2025</div>
-          <div class="val">$57.2M</div>
-          <div class="sub pos">↑ Segunda empresa</div>
-        </div>
-        <div class="kpi">
-          <div class="label">Total Activo</div>
-          <div class="val">$29.6M</div>
-          <div class="sub neu">— todo circulante</div>
-        </div>
-        <div class="kpi">
-          <div class="label">Utilidad Neta</div>
-          <div class="val">$2.2M</div>
-          <div class="sub pos">↑ 3.81% margen</div>
-        </div>
-        <div class="kpi">
-          <div class="label">Total Pasivo</div>
-          <div class="val">$28.4M</div>
-          <div class="sub neg">↓ 95.8% del activo</div>
-        </div>
-        <div class="kpi">
-          <div class="label">Capital</div>
-          <div class="val">$1.2M</div>
-          <div class="sub neg">↓ Muy estrecho</div>
-        </div>
+        <div class="kpi kpi-full"><div class="label">Ingresos Acumulados 2025</div><div class="val">$57.2M</div><div class="sub pos">↑ Segunda empresa</div></div>
+        <div class="kpi"><div class="label">Total Activo</div><div class="val">$29.6M</div><div class="sub neu">— todo circulante</div></div>
+        <div class="kpi"><div class="label">Utilidad Neta</div><div class="val">$2.2M</div><div class="sub pos">↑ 3.81% margen</div></div>
+        <div class="kpi"><div class="label">Total Pasivo</div><div class="val">$28.4M</div><div class="sub neg">↓ 95.8% del activo</div></div>
+        <div class="kpi"><div class="label">Capital</div><div class="val">$1.2M</div><div class="sub neg">↓ Muy estrecho</div></div>
       </div>
-      <div style="margin-top:14px;">
-        <div style="font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--muted);margin-bottom:4px;">COBERTURA ACTIVO/PASIVO</div>
-        <div class="bar-progress"><div class="bar-fill" style="width:95.8%;background:var(--dm);"></div></div>
+      <div style="margin-top:14px;"><div style="font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--muted);margin-bottom:4px;">COBERTURA ACTIVO/PASIVO</div><div class="bar-progress"><div class="bar-fill" style="width:95.8%;background:var(--dm);"></div></div></div>
+    </div>
+    <div class="company-card tin">
+      <div class="card-header"><div><div class="card-name">Transformadora Integral SA de CV</div><div class="card-code">TIN &bull; CLAVE</div></div><div class="status-chip alert">Alerta</div></div>
+      <div class="kpi-grid">
+        <div class="kpi kpi-full"><div class="label">Ingresos Acumulados 2025</div><div class="val">$3.3M</div><div class="sub neg">↓ Empresa más pequeña</div></div>
+        <div class="kpi"><div class="label">Total Activo</div><div class="val">$16.2M</div><div class="sub neu">— circulante</div></div>
+        <div class="kpi"><div class="label">Utilidad Neta</div><div class="val">$1.4M</div><div class="sub pos">↑ 41.3% margen</div></div>
+        <div class="kpi"><div class="label">Total Pasivo</div><div class="val">$18.4M</div><div class="sub neg">↓ > Activo total</div></div>
+        <div class="kpi"><div class="label">Capital</div><div class="val">-$2.2M</div><div class="sub neg">↓ Capital negativo</div></div>
+      </div>
+      <div style="margin-top:14px;"><div style="font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--muted);margin-bottom:4px;">COBERTURA PASIVO/ACTIVO (>100%)</div><div class="bar-progress"><div class="bar-fill" style="width:100%;background:var(--tin);"></div></div></div>
+    </div>
+  </div>
+
+  <!-- ═══ ADMON / OPERACIÓN — KPIs MENSUALES ═══ -->
+  <div class="section-label">Administración / Operación — Indicadores Mensuales</div>
+  <div class="charts-row cols-2">
+    <div class="chart-card">
+      <div class="title">KPIs Operativos Diciembre 2025</div>
+      <div class="subtitle">Cifras del mes vs promedio mensual anual</div>
+      <div style="overflow-x:auto;">
+        <table class="ops-table">
+          <thead><tr><th style="text-align:left;">Concepto</th><th>CHPP</th><th>DM</th><th>TIN</th></tr></thead>
+          <tbody>
+            <tr class="section-row"><td colspan="4">VENTAS y COBRANZA</td></tr>
+            <tr><td>Ventas del Mes</td><td style="color:var(--chpp);">$7.4M</td><td style="color:var(--dm);">$4.4M</td><td style="color:var(--tin);">$104.8K</td></tr>
+            <tr><td>Promedio Mensual Anual</td><td>$8.6M</td><td>$4.8M</td><td>$275.9K</td></tr>
+            <tr><td>Cartera por Cobrar (Clientes)</td><td style="color:var(--chpp);">$18.4M</td><td style="color:var(--dm);">$4.8M</td><td style="color:var(--tin);">$3.0M</td></tr>
+            <tr class="section-row"><td colspan="4">COSTOS y COMPRAS</td></tr>
+            <tr><td>Costos del Mes</td><td style="color:var(--chpp);">$5.5M</td><td style="color:var(--dm);">$2.4M</td><td style="color:var(--tin);">$35.5K</td></tr>
+            <tr><td>Gastos del Mes</td><td style="color:var(--chpp);">$14.5M</td><td style="color:var(--dm);">$4.2M</td><td style="color:var(--tin);">$84.7K</td></tr>
+            <tr class="section-row"><td colspan="4">PAGO DE PASIVOS</td></tr>
+            <tr><td>Proveedores</td><td style="color:var(--chpp);">$48.3M</td><td style="color:var(--dm);">$17.0M</td><td style="color:var(--tin);">$8.5M</td></tr>
+            <tr><td>Acreedores Diversos</td><td>$4.6M</td><td>$9.4M</td><td>$9.2M</td></tr>
+            <tr><td>Impuestos y Retenciones</td><td>$0.7M</td><td>$1.9M</td><td>$0.5M</td></tr>
+            <tr style="border-top:1px solid var(--border);"><td style="font-weight:700;">Resultado Mes (Dic)</td><td style="color:var(--tin);font-weight:700;">-$12.6M</td><td style="color:var(--tin);font-weight:700;">-$2.2M</td><td style="color:var(--tin);font-weight:700;">-$15.7K</td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
-
-    <!-- TIN -->
-    <div class="company-card tin">
-      <div class="card-header">
-        <div>
-          <div class="card-name">Transformadora Integral SA de CV</div>
-          <div class="card-code">TIN &bull; CLAVE</div>
-        </div>
-        <div class="status-chip alert">Alerta</div>
-      </div>
-      <div class="kpi-grid">
-        <div class="kpi kpi-full">
-          <div class="label">Ingresos Acumulados 2025</div>
-          <div class="val">$3.3M</div>
-          <div class="sub neg">↓ Empresa más pequeña</div>
-        </div>
-        <div class="kpi">
-          <div class="label">Total Activo</div>
-          <div class="val">$16.2M</div>
-          <div class="sub neu">— circulante</div>
-        </div>
-        <div class="kpi">
-          <div class="label">Utilidad Neta</div>
-          <div class="val">$1.4M</div>
-          <div class="sub pos">↑ 41.3% margen</div>
-        </div>
-        <div class="kpi">
-          <div class="label">Total Pasivo</div>
-          <div class="val">$18.4M</div>
-          <div class="sub neg">↓ > Activo total</div>
-        </div>
-        <div class="kpi">
-          <div class="label">Capital</div>
-          <div class="val">-$2.2M</div>
-          <div class="sub neg">↓ Capital negativo</div>
-        </div>
-      </div>
-      <div style="margin-top:14px;">
-        <div style="font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--muted);margin-bottom:4px;">COBERTURA PASIVO/ACTIVO (>100%)</div>
-        <div class="bar-progress"><div class="bar-fill" style="width:100%;background:var(--tin);"></div></div>
+    <div class="chart-card">
+      <div class="title">Composición de Pasivos</div>
+      <div class="subtitle">A quién le debe cada empresa</div>
+      <div class="chart-wrap" style="height:320px;">
+        <canvas id="chartPasivos"></canvas>
       </div>
     </div>
   </div>
 
-  <!-- ─── CHARTS ROW 1: Ingresos, Estructura ─── -->
+  <!-- ═══ CHARTS: Ingresos, Activos, Estructura ═══ -->
   <div class="section-label">Desempeño Financiero</div>
   <div class="charts-row cols-21" style="margin-bottom:20px;">
-
-    <div class="chart-card">
-      <div class="title">Comparativo de Ingresos vs Egresos</div>
-      <div class="subtitle">Acumulado anual 2025 &bull; En millones MXN</div>
-      <div class="chart-wrap" style="height:280px;">
-        <canvas id="chartIngEgr"></canvas>
-      </div>
-    </div>
-
-    <div class="chart-card">
-      <div class="title">Distribución Activos</div>
-      <div class="subtitle">Por empresa &bull; Total activos</div>
-      <div class="chart-wrap" style="height:280px;">
-        <canvas id="chartActivoDist"></canvas>
-      </div>
-    </div>
+    <div class="chart-card"><div class="title">Comparativo de Ingresos vs Egresos</div><div class="subtitle">Acumulado anual 2025 &bull; En millones MXN</div><div class="chart-wrap" style="height:280px;"><canvas id="chartIngEgr"></canvas></div></div>
+    <div class="chart-card"><div class="title">Distribución Activos</div><div class="subtitle">Por empresa &bull; Total activos</div><div class="chart-wrap" style="height:280px;"><canvas id="chartActivoDist"></canvas></div></div>
   </div>
-
   <div class="charts-row cols-3" style="margin-bottom:40px;">
-    <div class="chart-card">
-      <div class="title">Estructura Financiera CHPP</div>
-      <div class="subtitle">Activo vs Pasivo vs Capital</div>
-      <div class="chart-wrap" style="height:220px;">
-        <canvas id="chartEstrChpp"></canvas>
-      </div>
-    </div>
-    <div class="chart-card">
-      <div class="title">Estructura Financiera DM</div>
-      <div class="subtitle">Activo vs Pasivo vs Capital</div>
-      <div class="chart-wrap" style="height:220px;">
-        <canvas id="chartEstrDm"></canvas>
-      </div>
-    </div>
-    <div class="chart-card">
-      <div class="title">Estructura Financiera TIN</div>
-      <div class="subtitle">Activo vs Pasivo vs Capital</div>
-      <div class="chart-wrap" style="height:220px;">
-        <canvas id="chartEstrTin"></canvas>
-      </div>
-    </div>
+    <div class="chart-card"><div class="title">Estructura Financiera CHPP</div><div class="subtitle">Activo vs Pasivo vs Capital</div><div class="chart-wrap" style="height:220px;"><canvas id="chartEstrChpp"></canvas></div></div>
+    <div class="chart-card"><div class="title">Estructura Financiera DM</div><div class="subtitle">Activo vs Pasivo vs Capital</div><div class="chart-wrap" style="height:220px;"><canvas id="chartEstrDm"></canvas></div></div>
+    <div class="chart-card"><div class="title">Estructura Financiera TIN</div><div class="subtitle">Activo vs Pasivo vs Capital</div><div class="chart-wrap" style="height:220px;"><canvas id="chartEstrTin"></canvas></div></div>
   </div>
 
-  <!-- ─── RAZONES FINANCIERAS ─── -->
+  <!-- ═══ RAZONES FINANCIERAS + PARÁMETRO SANO ═══ -->
   <div class="section-label">Razones Financieras</div>
   <div class="charts-row cols-21" style="margin-bottom:40px;">
-
-    <div class="chart-card">
-      <div class="title">Radar de Indicadores Financieros</div>
-      <div class="subtitle">Normalizados por empresa &bull; mayor = mejor</div>
-      <div class="chart-wrap" style="height:320px;">
-        <canvas id="chartRadar"></canvas>
-      </div>
-    </div>
-
+    <div class="chart-card"><div class="title">Radar de Indicadores Financieros</div><div class="subtitle">Normalizados por empresa &bull; mayor = mejor</div><div class="chart-wrap" style="height:320px;"><canvas id="chartRadar"></canvas></div></div>
     <div class="chart-card">
       <div class="title">Tabla de Razones</div>
-      <div class="subtitle">Al 31 / Dic / 2025</div>
+      <div class="subtitle">Al 31 / Dic / 2025 &bull; con parámetro sano</div>
       <div style="overflow-x:auto;">
         <table class="ratio-table">
-          <thead>
-            <tr>
-              <th>Razón</th>
-              <th>CHPP</th>
-              <th>DM</th>
-              <th>TIN</th>
-            </tr>
-          </thead>
+          <thead><tr><th>Razón</th><th>Sano</th><th>CHPP</th><th>DM</th><th>TIN</th></tr></thead>
           <tbody>
-            <tr>
-              <td colspan="4" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);padding-top:14px;">LIQUIDEZ</td>
-            </tr>
+            <tr><td colspan="5" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);padding-top:14px;">LIQUIDEZ</td></tr>
             <tr>
               <td class="ratio-name">Razón Corriente</td>
-              <td><span class="ratio-val chpp">1.52</span> <span class="indicator good">✓ bueno</span></td>
-              <td><span class="ratio-val dm">1.04</span> <span class="indicator warn">≈ ajust.</span></td>
-              <td><span class="ratio-val tin">0.88</span> <span class="indicator bad">✗ bajo</span></td>
+              <td><span class="sano">&ge; 1.5x</span></td>
+              <td><span class="ratio-val chpp">1.52</span> <span class="indicator good">✓</span></td>
+              <td><span class="ratio-val dm">1.04</span> <span class="indicator warn">≈</span></td>
+              <td><span class="ratio-val tin">0.88</span> <span class="indicator bad">✗</span></td>
             </tr>
-            <tr>
-              <td colspan="4" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);padding-top:14px;">SOLVENCIA</td>
-            </tr>
+            <tr><td colspan="5" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);padding-top:14px;">SOLVENCIA</td></tr>
             <tr>
               <td class="ratio-name">Deuda/Activo</td>
-              <td><span class="ratio-val chpp">65.7%</span> <span class="indicator warn">≈ medio</span></td>
-              <td><span class="ratio-val dm">95.8%</span> <span class="indicator bad">✗ alto</span></td>
-              <td><span class="ratio-val tin">113.8%</span> <span class="indicator bad">✗ crít.</span></td>
+              <td><span class="sano">&le; 60%</span></td>
+              <td><span class="ratio-val chpp">65.7%</span> <span class="indicator warn">≈</span></td>
+              <td><span class="ratio-val dm">95.8%</span> <span class="indicator bad">✗</span></td>
+              <td><span class="ratio-val tin">113.8%</span> <span class="indicator bad">✗</span></td>
             </tr>
             <tr>
               <td class="ratio-name">Deuda/Capital</td>
-              <td><span class="ratio-val chpp">1.91x</span> <span class="indicator warn">≈ medio</span></td>
-              <td><span class="ratio-val dm">22.8x</span> <span class="indicator bad">✗ alto</span></td>
-              <td><span class="ratio-val tin">N/A</span> <span class="indicator bad">✗ neg.</span></td>
+              <td><span class="sano">&le; 2.0x</span></td>
+              <td><span class="ratio-val chpp">1.91x</span> <span class="indicator warn">≈</span></td>
+              <td><span class="ratio-val dm">22.8x</span> <span class="indicator bad">✗</span></td>
+              <td><span class="ratio-val tin">N/A</span> <span class="indicator bad">✗</span></td>
             </tr>
-            <tr>
-              <td colspan="4" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);padding-top:14px;">RENTABILIDAD</td>
-            </tr>
+            <tr><td colspan="5" style="font-family:'DM Mono',monospace;font-size:0.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);padding-top:14px;">RENTABILIDAD</td></tr>
             <tr>
               <td class="ratio-name">ROA</td>
-              <td><span class="ratio-val chpp">5.88%</span> <span class="indicator good">✓ bien</span></td>
-              <td><span class="ratio-val dm">7.35%</span> <span class="indicator good">✓ bien</span></td>
-              <td><span class="ratio-val tin">8.45%</span> <span class="indicator good">✓ bien</span></td>
+              <td><span class="sano">&ge; 5%</span></td>
+              <td><span class="ratio-val chpp">5.88%</span> <span class="indicator good">✓</span></td>
+              <td><span class="ratio-val dm">7.35%</span> <span class="indicator good">✓</span></td>
+              <td><span class="ratio-val tin">8.45%</span> <span class="indicator good">✓</span></td>
             </tr>
             <tr>
               <td class="ratio-name">ROE</td>
-              <td><span class="ratio-val chpp">17.1%</span> <span class="indicator good">✓ bueno</span></td>
-              <td><span class="ratio-val dm">175%</span> <span class="indicator warn">⚠ dist.</span></td>
-              <td><span class="ratio-val tin">N/A</span> <span class="indicator bad">✗ neg.</span></td>
+              <td><span class="sano">10-25%</span></td>
+              <td><span class="ratio-val chpp">17.1%</span> <span class="indicator good">✓</span></td>
+              <td><span class="ratio-val dm">175%</span> <span class="indicator warn">⚠</span></td>
+              <td><span class="ratio-val tin">N/A</span> <span class="indicator bad">✗</span></td>
             </tr>
             <tr>
               <td class="ratio-name">Margen Neto</td>
+              <td><span class="sano">&ge; 5%</span></td>
               <td><span class="ratio-val chpp">4.77%</span></td>
               <td><span class="ratio-val dm">3.81%</span></td>
-              <td><span class="ratio-val tin">41.3%</span> <span class="indicator good">✓ excel.</span></td>
+              <td><span class="ratio-val tin">41.3%</span> <span class="indicator good">✓</span></td>
             </tr>
             <tr>
               <td class="ratio-name">Margen Bruto</td>
-              <td><span class="ratio-val chpp">49.5%</span></td>
-              <td><span class="ratio-val dm">45.4%</span></td>
-              <td><span class="ratio-val tin">74.9%</span> <span class="indicator good">✓ excel.</span></td>
+              <td><span class="sano">&ge; 30%</span></td>
+              <td><span class="ratio-val chpp">49.5%</span> <span class="indicator good">✓</span></td>
+              <td><span class="ratio-val dm">45.4%</span> <span class="indicator good">✓</span></td>
+              <td><span class="ratio-val tin">74.9%</span> <span class="indicator good">✓</span></td>
             </tr>
           </tbody>
         </table>
@@ -778,60 +346,45 @@
     </div>
   </div>
 
-  <!-- ─── RENTABILIDAD CHARTS ─── -->
-  <div class="charts-row cols-3" style="margin-bottom:40px;">
+  <!-- ═══ RENTABILIDAD + % UTILIDAD PROMEDIO INDUSTRIA ═══ -->
+  <div class="charts-row cols-3" style="margin-bottom:20px;">
+    <div class="chart-card"><div class="title">Márgenes Comparativos</div><div class="subtitle">Bruto, Operativo y Neto</div><div class="chart-wrap" style="height:240px;"><canvas id="chartMargen"></canvas></div></div>
+    <div class="chart-card"><div class="title">ROA por Empresa</div><div class="subtitle">Retorno sobre activos 2025</div><div class="chart-wrap" style="height:240px;"><canvas id="chartROA"></canvas></div></div>
+    <div class="chart-card"><div class="title">Desglose de Egresos CHPP</div><div class="subtitle">Composición del gasto acumulado</div><div class="chart-wrap" style="height:240px;"><canvas id="chartEgresoChpp"></canvas></div></div>
+  </div>
+
+  <div class="charts-row cols-2" style="margin-bottom:40px;">
     <div class="chart-card">
-      <div class="title">Márgenes Comparativos</div>
-      <div class="subtitle">Bruto, Operativo y Neto</div>
-      <div class="chart-wrap" style="height:240px;">
-        <canvas id="chartMargen"></canvas>
-      </div>
+      <div class="title">% Utilidad Promedio — Segmento / Tipo de Negocio</div>
+      <div class="subtitle">Comparativo vs industria alimentaria México</div>
+      <div class="chart-wrap" style="height:260px;"><canvas id="chartBenchmark"></canvas></div>
     </div>
     <div class="chart-card">
-      <div class="title">ROA por Empresa</div>
-      <div class="subtitle">Retorno sobre activos 2025</div>
-      <div class="chart-wrap" style="height:240px;">
-        <canvas id="chartROA"></canvas>
-      </div>
-    </div>
-    <div class="chart-card">
-      <div class="title">Desglose de Egresos CHPP</div>
-      <div class="subtitle">Composición del gasto acumulado</div>
-      <div class="chart-wrap" style="height:240px;">
-        <canvas id="chartEgresoChpp"></canvas>
-      </div>
+      <div class="title">Ventas Mensual Dic vs Promedio</div>
+      <div class="subtitle">Diciembre 2025 vs promedio mensual del año</div>
+      <div class="chart-wrap" style="height:260px;"><canvas id="chartMensual"></canvas></div>
     </div>
   </div>
 
-  <!-- ─── ANÁLISIS POR EMPRESA ─── -->
+  <!-- ═══ ANÁLISIS POR EMPRESA ═══ -->
   <div class="section-label">Análisis por Empresa</div>
   <div class="analysis-grid">
     <div class="analysis-card">
-      <div class="a-header">
-        <div class="a-dot chpp"></div>
-        <h3>Chile Pepe SA de CV</h3>
-      </div>
-      <!-- ✅ CORRECCIÓN: 62.9% en lugar de 61.5% -->
+      <div class="a-header"><div class="a-dot chpp"></div><h3>Chile Pepe SA de CV</h3></div>
       <p><span class="highlight neu">Empresa ancla del grupo.</span> Con ingresos acumulados de <span class="highlight">$102.6M</span> es la empresa más grande en volumen de ventas, representando el 62.9% del ingreso consolidado del grupo.</p>
       <p>Su razón corriente de <span class="highlight pos">1.52x</span> indica buena cobertura de pasivos a corto plazo. Sin embargo, su relación deuda/activo del <span class="highlight neu">65.7%</span> indica dependencia moderada de financiamiento externo.</p>
       <p>La utilidad neta de <span class="highlight pos">$4.9M (4.77%)</span> es positiva aunque su mes de diciembre resultó con pérdida de <span class="highlight neg">$12.6M</span>, lo que sugiere estacionalidad o gastos extraordinarios en el cierre.</p>
       <p>El <span class="highlight">capital social de $28.6M</span> provee una base sólida. Se recomienda monitorear la razón deuda/capital (1.91x) y reducir pasivos con proveedores ($48.3M) que son la principal exposición.</p>
     </div>
     <div class="analysis-card">
-      <div class="a-header">
-        <div class="a-dot dm"></div>
-        <h3>Dulces Micho SA de CV</h3>
-      </div>
+      <div class="a-header"><div class="a-dot dm"></div><h3>Dulces Micho SA de CV</h3></div>
       <p><span class="highlight neu">Rentable pero altamente apalancada.</span> Con ingresos de <span class="highlight">$57.2M</span> y utilidad de $2.2M, Dulces Micho opera con un margen neto del 3.81%.</p>
       <p>La razón corriente de <span class="highlight neu">1.04x</span> está en zona crítica —apenas cubre los pasivos circulantes. Un deterioro mínimo en cobranza o un incremento en pasivos podría comprometer la liquidez operativa.</p>
       <p>La relación deuda/activo del <span class="highlight neg">95.8%</span> y deuda/capital de <span class="highlight neg">22.8x</span> revelan un nivel de apalancamiento extremo. El capital contable de $1.2M es insuficiente como colchón financiero.</p>
       <p>Punto positivo: el <span class="highlight pos">ROA de 7.35%</span> supera a CHPP, lo que indica eficiencia en el uso de activos. <span class="highlight">Acción urgente:</span> capitalizar utilidades y renegociar plazos con proveedores ($17M).</p>
     </div>
     <div class="analysis-card">
-      <div class="a-header">
-        <div class="a-dot tin"></div>
-        <h3>Transformadora Integral SA de CV</h3>
-      </div>
+      <div class="a-header"><div class="a-dot tin"></div><h3>Transformadora Integral SA de CV</h3></div>
       <p><span class="highlight neg">Capital negativo — situación crítica estructural.</span> A pesar de generar utilidades por <span class="highlight pos">$1.4M</span> con un impresionante margen neto del <span class="highlight pos">41.3%</span>, la empresa tiene un capital contable negativo de <span class="highlight neg">-$2.2M</span>.</p>
       <p>El pasivo de $18.4M supera al activo de $16.2M, resultando en una razón corriente de <span class="highlight neg">0.88x</span> — la empresa técnicamente no puede cubrir sus obligaciones a corto plazo con sus activos disponibles.</p>
       <p>El elevado margen bruto del <span class="highlight pos">74.9%</span> sugiere un modelo de negocio eficiente con buena generación de valor. El problema no es operativo sino estructural: acumulación de pérdidas históricas de <span class="highlight neg">$3.6M</span> en ejercicios anteriores.</p>
@@ -839,315 +392,240 @@
     </div>
   </div>
 
-  <!-- ─── CONSOLIDADO ─── -->
-  <div class="section-label">Resumen Consolidado del Grupo</div>
-  <div class="charts-row cols-2">
+  <!-- ═══ VALUACIÓN DE EMPRESAS ═══ -->
+  <div class="section-label">Valuación de Empresas — Valor en Libros</div>
+  <div class="chart-card" style="margin-bottom:40px;">
+    <div class="title">Valor de la Empresa en Caso de Venderla</div>
+    <div class="subtitle">Precio nominal &times; acciones &bull; Valor en libros (capital contable) &bull; Según actas de asamblea</div>
+    <div class="val-grid">
+      <div class="val-card" style="border-top: 2px solid var(--chpp);">
+        <div class="vc-header"><div class="vc-name">Chile Pepe</div><span class="status-chip caution">CHPP</span></div>
+        <div class="val-row"><span class="vl">Capital Social</span><span class="vv">$50,000</span></div>
+        <div class="val-row"><span class="vl">Valor en Libros (Capital Contable)</span><span class="vv" style="color:var(--chpp);font-weight:700;">$28,598,656</span></div>
+        <div class="val-row"><span class="vl">Multiplicador Valor/Nominal</span><span class="vv">572x</span></div>
+        <div class="val-row"><span class="vl">Misael González O. (75%)</span><span class="vv">$21,448,992</span></div>
+        <div class="val-row"><span class="vl">Bertha M. Padilla C. (25%)</span><span class="vv">$7,149,664</span></div>
+      </div>
+      <div class="val-card" style="border-top: 2px solid var(--dm);">
+        <div class="vc-header"><div class="vc-name">Dulces Micho</div><span class="status-chip caution">DM</span></div>
+        <div class="val-row"><span class="vl">Capital Social</span><span class="vv">$50,000</span></div>
+        <div class="val-row"><span class="vl">Valor en Libros (Capital Contable)</span><span class="vv" style="color:var(--dm);font-weight:700;">$1,241,911</span></div>
+        <div class="val-row"><span class="vl">Multiplicador Valor/Nominal</span><span class="vv">24.8x</span></div>
+        <div class="val-row"><span class="vl">Misael González O. (80%)</span><span class="vv">$993,529</span></div>
+        <div class="val-row"><span class="vl">Bertha M. Padilla C. (20%)</span><span class="vv">$248,382</span></div>
+      </div>
+      <div class="val-card" style="border-top: 2px solid var(--tin);">
+        <div class="vc-header"><div class="vc-name">Transformadora Integral</div><span class="status-chip alert">TIN</span></div>
+        <div class="val-row"><span class="vl">Capital Social</span><span class="vv">$50,000</span></div>
+        <div class="val-row"><span class="vl">Valor en Libros (Capital Contable)</span><span class="vv" style="color:var(--tin);font-weight:700;">-$2,228,740</span></div>
+        <div class="val-row"><span class="vl">Multiplicador Valor/Nominal</span><span class="vv" style="color:var(--tin);">Negativo</span></div>
+        <div class="val-row"><span class="vl">Misael González O. (51%)</span><span class="vv" style="color:var(--tin);">-$1,136,657</span></div>
+        <div class="val-row"><span class="vl">Bertha M. Padilla C. (49%)</span><span class="vv" style="color:var(--tin);">-$1,092,083</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ ESCENARIOS DE PROYECCIÓN ═══ -->
+  <div class="section-label">Escenarios de Proyección</div>
+  <div class="charts-row cols-2" style="margin-bottom:40px;">
     <div class="chart-card">
-      <div class="title">Ingreso Consolidado del Grupo</div>
-      <div class="subtitle">Participación porcentual 2025</div>
-      <div class="chart-wrap" style="height:240px;">
-        <canvas id="chartConsol"></canvas>
+      <div class="title">Proyección Fiscal y Utilidades Financieras</div>
+      <div class="subtitle">Escenarios 2026 basados en tendencia 2025</div>
+      <div class="scenario-row">
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--dm);letter-spacing:2px;margin-bottom:10px;">ESCENARIO OPTIMISTA (+10%)</div>
+          <div class="sc-item"><div class="sc-dot" style="background:var(--chpp);"></div><div class="sc-text"><strong>CHPP:</strong> Ingresos $112.9M → Utilidad est. $5.9M</div></div>
+          <div class="sc-item"><div class="sc-dot" style="background:var(--dm);"></div><div class="sc-text"><strong>DM:</strong> Ingresos $62.9M → Utilidad est. $2.8M</div></div>
+          <div class="sc-item"><div class="sc-dot" style="background:var(--tin);"></div><div class="sc-text"><strong>TIN:</strong> Ingresos $3.6M → Utilidad est. $1.5M</div></div>
+          <div style="margin-top:10px;padding:8px 12px;background:rgba(94,200,160,0.08);border-radius:8px;"><span style="font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--dm);">Grupo: $179.4M ingresos · $10.2M utilidad</span></div>
+        </div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--tin);letter-spacing:2px;margin-bottom:10px;">ESCENARIO CONSERVADOR (=2025)</div>
+          <div class="sc-item"><div class="sc-dot" style="background:var(--chpp);"></div><div class="sc-text"><strong>CHPP:</strong> Ingresos $102.6M → Utilidad est. $4.9M</div></div>
+          <div class="sc-item"><div class="sc-dot" style="background:var(--dm);"></div><div class="sc-text"><strong>DM:</strong> Ingresos $57.2M → Utilidad est. $2.2M</div></div>
+          <div class="sc-item"><div class="sc-dot" style="background:var(--tin);"></div><div class="sc-text"><strong>TIN:</strong> Ingresos $3.3M → Utilidad est. $1.4M</div></div>
+          <div style="margin-top:10px;padding:8px 12px;background:rgba(232,107,94,0.08);border-radius:8px;"><span style="font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--tin);">Grupo: $163.1M ingresos · $8.4M utilidad</span></div>
+        </div>
       </div>
     </div>
     <div class="chart-card">
-      <div class="title">Métricas Consolidadas</div>
-      <div class="subtitle">Suma de las tres empresas</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;">
-        <div class="kpi">
-          <div class="label">Ingresos Totales</div>
-          <!-- ✅ CORRECCIÓN: $163.1M en lugar de $162.1M -->
-          <div class="val" style="font-size:1.4rem;">$163.1M</div>
-          <div class="sub neu">— Grupo Micho 2025</div>
-        </div>
-        <div class="kpi">
-          <div class="label">Utilidad Neta Total</div>
-          <div class="val" style="font-size:1.4rem;color:var(--dm);">$8.4M</div>
-          <div class="sub pos">↑ 5.2% margen consolidado</div>
-        </div>
-        <div class="kpi">
-          <div class="label">Activos Totales</div>
-          <div class="val" style="font-size:1.2rem;">$129.1M</div>
-          <div class="sub neu">— base consolidada</div>
-        </div>
-        <div class="kpi">
-          <div class="label">Pasivos Totales</div>
-          <div class="val" style="font-size:1.2rem;color:var(--tin);">$101.5M</div>
-          <div class="sub neg">↓ 78.6% del activo</div>
-        </div>
-        <div class="kpi">
-          <div class="label">Capital Consolidado</div>
-          <div class="val" style="font-size:1.2rem;">$27.6M</div>
-          <div class="sub neg">↓ arrastrado por TIN</div>
-        </div>
-        <div class="kpi">
-          <div class="label">ROA Promedio</div>
-          <div class="val" style="font-size:1.2rem;color:var(--chpp);">7.23%</div>
-          <div class="sub pos">↑ eficiencia de activos</div>
-        </div>
+      <div class="title">Escenarios Extraordinarios</div>
+      <div class="subtitle">Inversiones, mejoras, compra de activos, PTU</div>
+      <div style="margin-top:4px;">
+        <div class="sc-item"><div class="sc-dot" style="background:var(--accent);"></div><div class="sc-text"><strong>PTU Estimado 2026:</strong> CHPP ~$489K · DM ~$218K · TIN ~$137K (10% utilidad fiscal)</div></div>
+        <div class="sc-item"><div class="sc-dot" style="background:var(--gold);"></div><div class="sc-text"><strong>Activo Fijo Neto:</strong> CHPP $9.75M · DM $7.80M · TIN $1.94M — evaluar reinversión en maquinaria</div></div>
+        <div class="sc-item"><div class="sc-dot" style="background:var(--dm);"></div><div class="sc-text"><strong>Capitalización DM:</strong> Reinvertir utilidades ($2.2M) para elevar capital contable de $1.2M a $3.4M</div></div>
+        <div class="sc-item"><div class="sc-dot" style="background:var(--tin);"></div><div class="sc-text"><strong>Saneamiento TIN:</strong> Con $1.4M/año de utilidad, revertir capital negativo en ~2 años si no se reparten dividendos</div></div>
+        <div class="sc-item"><div class="sc-dot" style="background:var(--chpp);"></div><div class="sc-text"><strong>Renegociación Proveedores:</strong> CHPP $48.3M + DM $17M + TIN $8.5M = $73.8M exposición total grupo</div></div>
+        <div class="sc-item"><div class="sc-dot" style="background:var(--accent);"></div><div class="sc-text"><strong>Inversiones Potenciales:</strong> Mejoras en planta, equipo de producción, expansión de capacidad — sujeto a flujo de caja disponible</div></div>
       </div>
+    </div>
+  </div>
+
+  <!-- ═══ CONSOLIDADO ═══ -->
+  <div class="section-label">Resumen Consolidado del Grupo</div>
+  <div class="charts-row cols-2">
+    <div class="chart-card"><div class="title">Ingreso Consolidado del Grupo</div><div class="subtitle">Participación porcentual 2025</div><div class="chart-wrap" style="height:240px;"><canvas id="chartConsol"></canvas></div></div>
+    <div class="chart-card">
+      <div class="title">Métricas Consolidadas</div><div class="subtitle">Suma de las tres empresas</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;">
+        <div class="kpi"><div class="label">Ingresos Totales</div><div class="val" style="font-size:1.4rem;">$163.1M</div><div class="sub neu">— Grupo Micho 2025</div></div>
+        <div class="kpi"><div class="label">Utilidad Neta Total</div><div class="val" style="font-size:1.4rem;color:var(--dm);">$8.4M</div><div class="sub pos">↑ 5.2% margen consolidado</div></div>
+        <div class="kpi"><div class="label">Activos Totales</div><div class="val" style="font-size:1.2rem;">$129.1M</div><div class="sub neu">— base consolidada</div></div>
+        <div class="kpi"><div class="label">Pasivos Totales</div><div class="val" style="font-size:1.2rem;color:var(--tin);">$101.5M</div><div class="sub neg">↓ 78.6% del activo</div></div>
+        <div class="kpi"><div class="label">Capital Consolidado</div><div class="val" style="font-size:1.2rem;">$27.6M</div><div class="sub neg">↓ arrastrado por TIN</div></div>
+        <div class="kpi"><div class="label">ROA Promedio</div><div class="val" style="font-size:1.2rem;color:var(--chpp);">7.23%</div><div class="sub pos">↑ eficiencia de activos</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ GLOSARIO DE TÉRMINOS ═══ -->
+  <div class="section-label" style="margin-top:40px;">Glosario de Términos</div>
+  <div class="chart-card" style="margin-bottom:40px;">
+    <div class="title">Diccionario Financiero Rápido</div>
+    <div class="subtitle">Referencia de conceptos utilizados en este análisis</div>
+    <div class="glossary-grid" style="margin-top:12px;">
+      <div class="gloss-item"><span class="gloss-term">Activo</span><span class="gloss-def">Todo lo que tiene la empresa: dinero, inventario, maquinaria, cuentas por cobrar.</span></div>
+      <div class="gloss-item"><span class="gloss-term">Pasivo</span><span class="gloss-def">Todo lo que debe la empresa: a proveedores, bancos, gobierno, empleados.</span></div>
+      <div class="gloss-item"><span class="gloss-term">Capital</span><span class="gloss-def">Activo menos Pasivo. Lo que realmente pertenece a los socios.</span></div>
+      <div class="gloss-item"><span class="gloss-term">Razón Corriente</span><span class="gloss-def">Activo / Pasivo a corto plazo. Mayor a 1 = puede pagar sus deudas.</span></div>
+      <div class="gloss-item"><span class="gloss-term">Deuda/Activo</span><span class="gloss-def">% del activo financiado con deuda. Arriba de 60% es riesgoso.</span></div>
+      <div class="gloss-item"><span class="gloss-term">ROA</span><span class="gloss-def">Utilidad / Activos. Mide eficiencia en el uso de recursos. Mayor = mejor.</span></div>
+      <div class="gloss-item"><span class="gloss-term">ROE</span><span class="gloss-def">Utilidad / Capital. Retorno para los socios por peso invertido.</span></div>
+      <div class="gloss-item"><span class="gloss-term">Margen Bruto</span><span class="gloss-def">Ingreso menos Costo de Venta / Ingreso. Ganancia antes de gastos operativos.</span></div>
+      <div class="gloss-item"><span class="gloss-term">Margen Neto</span><span class="gloss-def">Utilidad / Ingreso total. Lo que queda limpio después de todos los gastos.</span></div>
+      <div class="gloss-item"><span class="gloss-term">Apalancamiento</span><span class="gloss-def">Usar deuda para financiar operaciones. Mucho apalancamiento = mayor riesgo.</span></div>
+      <div class="gloss-item"><span class="gloss-term">Capitalizar</span><span class="gloss-def">Reinvertir utilidades o inyectar capital propio en vez de repartir dividendos.</span></div>
+      <div class="gloss-item"><span class="gloss-term">PTU</span><span class="gloss-def">Participación de los Trabajadores en las Utilidades. 10% de la utilidad fiscal.</span></div>
+      <div class="gloss-item"><span class="gloss-term">Balance General</span><span class="gloss-def">Fotografía financiera: qué tiene, qué debe y qué queda en un momento dado.</span></div>
+      <div class="gloss-item"><span class="gloss-term">Estado de Resultados</span><span class="gloss-def">Película del periodo: cuánto vendió, cuánto gastó, cuánto ganó o perdió.</span></div>
+      <div class="gloss-item"><span class="gloss-term">Liquidez</span><span class="gloss-def">Capacidad de pagar deudas de corto plazo (menos de 1 año).</span></div>
+      <div class="gloss-item"><span class="gloss-term">Solvencia</span><span class="gloss-def">Capacidad de pagar todas las deudas. Mide qué tan endeudado estás.</span></div>
     </div>
   </div>
 
 </main>
 
 <footer>
-  <p>GRUPO MICHO &bull; ANÁLISIS FINANCIERO &bull; 31-DIC-2025 &bull; DATOS: CONTPAQ i</p>
-  <div class="legend">
-    <div class="legend-item"><div class="legend-dot" style="background:var(--chpp);"></div>CHPP Chile Pepe</div>
-    <div class="legend-item"><div class="legend-dot" style="background:var(--dm);"></div>DM Dulces Micho</div>
-    <div class="legend-item"><div class="legend-dot" style="background:var(--tin);"></div>TIN Transformadora</div>
+  <div class="footer-main">
+    <p>GRUPO MICHO &bull; ANÁLISIS FINANCIERO &bull; 31-DIC-2025 &bull; DATOS: CONTPAQ i &bull; PRESENTADO POR FLEXDER CORPORATIVO</p>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--chpp);"></div>CHPP Chile Pepe</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--dm);"></div>DM Dulces Micho</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--tin);"></div>TIN Transformadora</div>
+    </div>
+  </div>
+  <div class="privacy-notice">
+    <strong>AVISO DE PRIVACIDAD</strong> — La información contenida en este documento es confidencial y está destinada exclusivamente para uso interno de Grupo Micho y sus representantes legales. Queda estrictamente prohibida su reproducción, distribución o divulgación total o parcial a terceros sin autorización previa por escrito. Los datos financieros presentados provienen de los registros contables generados en CONTPAQi al 31 de diciembre de 2025. Este análisis no constituye asesoría fiscal, legal ni financiera vinculante. Flexder Corporativo actúa únicamente como presentador de la información financiera aquí contenida. Para el ejercicio de sus derechos ARCO o cualquier consulta relacionada con el manejo de datos, favor de contactar directamente a la administración de Grupo Micho. El uso de este documento implica la aceptación de los términos aquí descritos.
   </div>
 </footer>
 
 <script>
-const CHPP = '#e8b84b';
-const DM   = '#5ec8a0';
-const TIN  = '#e86b5e';
-const MUT  = 'rgba(255,255,255,0.15)';
-const GRID = 'rgba(255,255,255,0.05)';
-const FONT = "'Outfit', sans-serif";
-
+const CHPP = '#e8b84b', DM = '#5ec8a0', TIN = '#e86b5e', GRID = 'rgba(255,255,255,0.05)';
 Chart.defaults.color = '#5a6070';
-Chart.defaults.font.family = FONT;
+Chart.defaults.font.family = "'Outfit', sans-serif";
 Chart.defaults.font.size = 11;
+const tooltipStyle = { backgroundColor: '#0e1422', borderColor: 'rgba(255,255,255,0.12)', borderWidth: 1, titleColor: '#d8dde8', bodyColor: '#5a6070', padding: 10, titleFont: { family: "'DM Mono', monospace", size: 11 } };
 
-const tooltipStyle = {
-  backgroundColor: '#0e1422',
-  borderColor: 'rgba(255,255,255,0.12)',
-  borderWidth: 1,
-  titleColor: '#d8dde8',
-  bodyColor: '#5a6070',
-  padding: 10,
-  titleFont: { family: "'DM Mono', monospace", size: 11 },
-};
-
-// 1. Ingresos vs Egresos
+// Ingresos vs Egresos
 new Chart(document.getElementById('chartIngEgr'), {
   type: 'bar',
-  data: {
-    labels: ['CHPP', 'DM', 'TIN'],
-    datasets: [
-      {
-        label: 'Ingresos',
-        data: [102.62, 57.19, 3.31],
-        backgroundColor: [
-          'rgba(232,184,75,0.7)',
-          'rgba(94,200,160,0.7)',
-          'rgba(232,107,94,0.7)',
-        ],
-        borderRadius: 6,
-        borderSkipped: false,
-      },
-      {
-        label: 'Egresos',
-        data: [97.73, 55.02, 1.94],
-        backgroundColor: [
-          'rgba(232,184,75,0.25)',
-          'rgba(94,200,160,0.25)',
-          'rgba(232,107,94,0.25)',
-        ],
-        borderColor: [CHPP, DM, TIN],
-        borderWidth: 1,
-        borderRadius: 6,
-        borderSkipped: false,
-      }
-    ]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { position: 'bottom' }, tooltip: { ...tooltipStyle } },
-    scales: {
-      x: { grid: { color: GRID }, ticks: { color: '#5a6070' }, border: { color: GRID } },
-      y: {
-        grid: { color: GRID }, border: { color: GRID },
-        ticks: { color: '#5a6070', callback: v => '$' + v + 'M' }
-      }
-    }
-  }
+  data: { labels: ['CHPP', 'DM', 'TIN'], datasets: [
+    { label: 'Ingresos', data: [102.62, 57.19, 3.31], backgroundColor: ['rgba(232,184,75,0.7)','rgba(94,200,160,0.7)','rgba(232,107,94,0.7)'], borderRadius: 6, borderSkipped: false },
+    { label: 'Egresos', data: [97.73, 55.02, 1.94], backgroundColor: ['rgba(232,184,75,0.25)','rgba(94,200,160,0.25)','rgba(232,107,94,0.25)'], borderColor: [CHPP, DM, TIN], borderWidth: 1, borderRadius: 6, borderSkipped: false }
+  ]},
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' }, tooltip: { ...tooltipStyle } }, scales: { x: { grid: { color: GRID }, border: { color: GRID } }, y: { grid: { color: GRID }, border: { color: GRID }, ticks: { callback: v => '$' + v + 'M' } } } }
 });
 
-// 2. Distribución activos donut
+// Activos
 new Chart(document.getElementById('chartActivoDist'), {
   type: 'doughnut',
-  data: {
-    labels: ['Chile Pepe', 'Dulces Micho', 'Transformadora'],
-    datasets: [{
-      data: [83.3, 29.6, 16.2],
-      backgroundColor: ['rgba(232,184,75,0.85)', 'rgba(94,200,160,0.85)', 'rgba(232,107,94,0.85)'],
-      borderColor: '#121929',
-      borderWidth: 3,
-      hoverOffset: 6,
-    }]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    cutout: '65%',
-    plugins: {
-      legend: { position: 'bottom', labels: { padding: 14, boxWidth: 10 } },
-      tooltip: { ...tooltipStyle, callbacks: { label: c => ` $${c.parsed}M (${(c.parsed/129.1*100).toFixed(1)}%)` } }
-    }
-  }
+  data: { labels: ['Chile Pepe', 'Dulces Micho', 'Transformadora'], datasets: [{ data: [83.3, 29.6, 16.2], backgroundColor: ['rgba(232,184,75,0.85)','rgba(94,200,160,0.85)','rgba(232,107,94,0.85)'], borderColor: '#121929', borderWidth: 3 }] },
+  options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { position: 'bottom', labels: { padding: 14, boxWidth: 10 } }, tooltip: { ...tooltipStyle, callbacks: { label: c => ` $${c.parsed}M (${(c.parsed/129.1*100).toFixed(1)}%)` } } } }
 });
 
-// 3-5. Estructura por empresa
-function donutEstr(id, activo, pasivo, capital, color) {
-  const capAbs = Math.abs(capital);
-  new Chart(document.getElementById(id), {
-    type: 'doughnut',
-    data: {
-      labels: ['Pasivo', capital < 0 ? 'Capital (neg)' : 'Capital'],
-      datasets: [{
-        data: [pasivo, capAbs],
-        backgroundColor: [color + 'cc', 'rgba(255,255,255,0.08)'],
-        borderColor: '#121929', borderWidth: 3, hoverOffset: 4,
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false, cutout: '70%',
-      plugins: {
-        legend: { position: 'bottom', labels: { padding: 10, boxWidth: 8, font: { size: 10 } } },
-        tooltip: { ...tooltipStyle }
-      }
-    }
-  });
+// Estructura
+function donutEstr(id, a, p, cap, col) {
+  new Chart(document.getElementById(id), { type: 'doughnut', data: { labels: ['Pasivo', cap < 0 ? 'Capital (neg)' : 'Capital'], datasets: [{ data: [p, Math.abs(cap)], backgroundColor: [col + 'cc', 'rgba(255,255,255,0.08)'], borderColor: '#121929', borderWidth: 3 }] }, options: { responsive: true, maintainAspectRatio: false, cutout: '70%', plugins: { legend: { position: 'bottom', labels: { padding: 10, boxWidth: 8, font: { size: 10 } } }, tooltip: { ...tooltipStyle } } } });
 }
 donutEstr('chartEstrChpp', 83.3, 54.7, 28.6, CHPP);
-donutEstr('chartEstrDm',   29.6, 28.4, 1.2,  DM);
-donutEstr('chartEstrTin',  16.2, 18.4, -2.2, TIN);
+donutEstr('chartEstrDm', 29.6, 28.4, 1.2, DM);
+donutEstr('chartEstrTin', 16.2, 18.4, -2.2, TIN);
 
-// 6. Radar
+// Radar
 new Chart(document.getElementById('chartRadar'), {
   type: 'radar',
-  data: {
-    labels: ['Liquidez', 'Solvencia\n(inv.)', 'Margen\nNeto', 'Margen\nBruto', 'ROA', 'ROE (norm)'],
-    datasets: [
-      {
-        label: 'CHPP',
-        data: [76, 34, 24, 49, 29, 17],
-        borderColor: CHPP, backgroundColor: 'rgba(232,184,75,0.12)',
-        pointBackgroundColor: CHPP, borderWidth: 2, pointRadius: 4,
-      },
-      {
-        label: 'DM',
-        data: [52, 4, 19, 45, 37, 88],
-        borderColor: DM, backgroundColor: 'rgba(94,200,160,0.12)',
-        pointBackgroundColor: DM, borderWidth: 2, pointRadius: 4,
-      },
-      {
-        label: 'TIN',
-        data: [44, 0, 100, 100, 42, 0],
-        borderColor: TIN, backgroundColor: 'rgba(232,107,94,0.12)',
-        pointBackgroundColor: TIN, borderWidth: 2, pointRadius: 4,
-      },
-    ]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { position: 'bottom' }, tooltip: { ...tooltipStyle } },
-    scales: {
-      r: {
-        min: 0, max: 100,
-        grid: { color: GRID },
-        ticks: { display: false },
-        pointLabels: { color: '#8a9ab0', font: { size: 10 } },
-        angleLines: { color: GRID }
-      }
-    }
-  }
+  data: { labels: ['Liquidez', 'Solvencia\n(inv.)', 'Margen\nNeto', 'Margen\nBruto', 'ROA', 'ROE (norm)'], datasets: [
+    { label: 'CHPP', data: [76, 34, 24, 49, 29, 17], borderColor: CHPP, backgroundColor: 'rgba(232,184,75,0.12)', pointBackgroundColor: CHPP, borderWidth: 2, pointRadius: 4 },
+    { label: 'DM', data: [52, 4, 19, 45, 37, 88], borderColor: DM, backgroundColor: 'rgba(94,200,160,0.12)', pointBackgroundColor: DM, borderWidth: 2, pointRadius: 4 },
+    { label: 'TIN', data: [44, 0, 100, 100, 42, 0], borderColor: TIN, backgroundColor: 'rgba(232,107,94,0.12)', pointBackgroundColor: TIN, borderWidth: 2, pointRadius: 4 },
+  ]},
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' }, tooltip: { ...tooltipStyle } }, scales: { r: { min: 0, max: 100, grid: { color: GRID }, ticks: { display: false }, pointLabels: { color: '#8a9ab0', font: { size: 10 } }, angleLines: { color: GRID } } } }
 });
 
-// 7. Márgenes
+// Márgenes
 new Chart(document.getElementById('chartMargen'), {
-  type: 'bar',
-  data: {
-    labels: ['Margen Bruto', 'Margen Neto'],
-    datasets: [
-      { label: 'CHPP', data: [49.5, 4.77], backgroundColor: 'rgba(232,184,75,0.75)', borderRadius: 5, borderSkipped: false },
-      { label: 'DM',   data: [45.4, 3.81], backgroundColor: 'rgba(94,200,160,0.75)', borderRadius: 5, borderSkipped: false },
-      { label: 'TIN',  data: [74.9, 41.3], backgroundColor: 'rgba(232,107,94,0.75)', borderRadius: 5, borderSkipped: false },
-    ]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { position: 'bottom' }, tooltip: { ...tooltipStyle } },
-    scales: {
-      x: { grid: { color: GRID }, border: { color: GRID } },
-      y: { grid: { color: GRID }, border: { color: GRID }, ticks: { callback: v => v + '%' } }
-    }
-  }
+  type: 'bar', data: { labels: ['Margen Bruto', 'Margen Neto'], datasets: [
+    { label: 'CHPP', data: [49.5, 4.77], backgroundColor: 'rgba(232,184,75,0.75)', borderRadius: 5, borderSkipped: false },
+    { label: 'DM', data: [45.4, 3.81], backgroundColor: 'rgba(94,200,160,0.75)', borderRadius: 5, borderSkipped: false },
+    { label: 'TIN', data: [74.9, 41.3], backgroundColor: 'rgba(232,107,94,0.75)', borderRadius: 5, borderSkipped: false },
+  ]},
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' }, tooltip: { ...tooltipStyle } }, scales: { x: { grid: { color: GRID }, border: { color: GRID } }, y: { grid: { color: GRID }, border: { color: GRID }, ticks: { callback: v => v + '%' } } } }
 });
 
-// 8. ROA
+// ROA
 new Chart(document.getElementById('chartROA'), {
-  type: 'bar',
-  data: {
-    labels: ['CHPP', 'DM', 'TIN'],
-    datasets: [{
-      label: 'ROA %',
-      data: [5.88, 7.35, 8.45],
-      backgroundColor: [
-        'rgba(232,184,75,0.75)',
-        'rgba(94,200,160,0.75)',
-        'rgba(232,107,94,0.75)',
-      ],
-      borderRadius: 8, borderSkipped: false,
-    }]
-  },
-  options: {
-    indexAxis: 'y',
-    responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { display: false }, tooltip: { ...tooltipStyle } },
-    scales: {
-      x: { grid: { color: GRID }, border: { color: GRID }, ticks: { callback: v => v + '%' } },
-      y: { grid: { color: GRID }, border: { color: GRID } }
-    }
-  }
+  type: 'bar', data: { labels: ['CHPP', 'DM', 'TIN'], datasets: [{ label: 'ROA %', data: [5.88, 7.35, 8.45], backgroundColor: ['rgba(232,184,75,0.75)','rgba(94,200,160,0.75)','rgba(232,107,94,0.75)'], borderRadius: 8, borderSkipped: false }] },
+  options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { ...tooltipStyle } }, scales: { x: { grid: { color: GRID }, border: { color: GRID }, ticks: { callback: v => v + '%' } }, y: { grid: { color: GRID }, border: { color: GRID } } } }
 });
 
-// 9. Desglose egresos CHPP
+// Egresos CHPP
 new Chart(document.getElementById('chartEgresoChpp'), {
-  type: 'doughnut',
-  data: {
-    labels: ['Costo de Venta', 'G. Fabricación', 'G. Venta', 'G. Administración', 'G. Financieros'],
-    datasets: [{
-      data: [48.2, 37.2, 7.25, 1.44, 0.88],
-      backgroundColor: [
-        'rgba(232,184,75,0.9)',
-        'rgba(232,184,75,0.55)',
-        'rgba(232,184,75,0.35)',
-        'rgba(232,184,75,0.2)',
-        'rgba(232,184,75,0.1)',
-      ],
-      borderColor: '#121929', borderWidth: 2, hoverOffset: 5,
-    }]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false, cutout: '60%',
-    plugins: {
-      legend: { position: 'bottom', labels: { padding: 8, boxWidth: 8, font: { size: 9 } } },
-      tooltip: { ...tooltipStyle, callbacks: { label: c => ` $${c.parsed}M` } }
-    }
-  }
+  type: 'doughnut', data: { labels: ['Costo de Venta', 'G. Fabricación', 'G. Venta', 'G. Administración', 'G. Financieros'], datasets: [{ data: [48.2, 37.2, 7.25, 1.44, 0.88], backgroundColor: ['rgba(232,184,75,0.9)','rgba(232,184,75,0.55)','rgba(232,184,75,0.35)','rgba(232,184,75,0.2)','rgba(232,184,75,0.1)'], borderColor: '#121929', borderWidth: 2 }] },
+  options: { responsive: true, maintainAspectRatio: false, cutout: '60%', plugins: { legend: { position: 'bottom', labels: { padding: 8, boxWidth: 8, font: { size: 9 } } }, tooltip: { ...tooltipStyle, callbacks: { label: c => ` $${c.parsed}M` } } } }
 });
 
-// 10. Consolidado — ✅ CORRECCIÓN: porcentajes corregidos (62.9%, 35.1%, 2.0%)
+// NEW: Composición Pasivos
+new Chart(document.getElementById('chartPasivos'), {
+  type: 'bar',
+  data: { labels: ['CHPP', 'DM', 'TIN'], datasets: [
+    { label: 'Proveedores', data: [48.28, 17.01, 8.45], backgroundColor: 'rgba(232,184,75,0.8)', borderRadius: 4, borderSkipped: false },
+    { label: 'Acreedores', data: [4.56, 9.37, 9.16], backgroundColor: 'rgba(94,200,160,0.6)', borderRadius: 4, borderSkipped: false },
+    { label: 'Impuestos & Otros', data: [1.84, 1.97, 0.78], backgroundColor: 'rgba(61,127,255,0.5)', borderRadius: 4, borderSkipped: false },
+  ]},
+  options: { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false }, plugins: { legend: { position: 'bottom' }, tooltip: { ...tooltipStyle, mode: 'index', intersect: false, callbacks: { label: c => ` ${c.dataset.label}: $${c.parsed.y.toFixed(1)}M` } } },
+    scales: { x: { stacked: true, grid: { color: GRID }, border: { color: GRID } }, y: { stacked: true, grid: { color: GRID }, border: { color: GRID }, ticks: { callback: v => '$' + v + 'M' } } } }
+});
+
+// NEW: Benchmark industria
+new Chart(document.getElementById('chartBenchmark'), {
+  type: 'bar',
+  data: { labels: ['Margen Bruto', 'Margen Neto', 'ROA'], datasets: [
+    { label: 'Industria Alimentaria MX (promedio)', data: [32, 4.5, 5.0], backgroundColor: 'rgba(61,127,255,0.4)', borderColor: '#3d7fff', borderWidth: 1.5, borderRadius: 5, borderSkipped: false },
+    { label: 'CHPP', data: [49.5, 4.77, 5.88], backgroundColor: 'rgba(232,184,75,0.65)', borderRadius: 5, borderSkipped: false },
+    { label: 'DM', data: [45.4, 3.81, 7.35], backgroundColor: 'rgba(94,200,160,0.65)', borderRadius: 5, borderSkipped: false },
+    { label: 'TIN', data: [74.9, 41.3, 8.45], backgroundColor: 'rgba(232,107,94,0.65)', borderRadius: 5, borderSkipped: false },
+  ]},
+  options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } }, tooltip: { ...tooltipStyle } },
+    scales: { x: { grid: { color: GRID }, border: { color: GRID } }, y: { grid: { color: GRID }, border: { color: GRID }, ticks: { callback: v => v + '%' } } } }
+});
+
+// NEW: Ventas Dic vs Promedio
+new Chart(document.getElementById('chartMensual'), {
+  type: 'bar',
+  data: { labels: ['CHPP', 'DM', 'TIN'], datasets: [
+    { label: 'Diciembre 2025', data: [7.43, 4.40, 0.10], backgroundColor: ['rgba(232,184,75,0.8)','rgba(94,200,160,0.8)','rgba(232,107,94,0.8)'], borderRadius: 6, borderSkipped: false },
+    { label: 'Promedio Mensual', data: [8.55, 4.77, 0.28], backgroundColor: ['rgba(232,184,75,0.25)','rgba(94,200,160,0.25)','rgba(232,107,94,0.25)'], borderColor: [CHPP, DM, TIN], borderWidth: 1.5, borderRadius: 6, borderSkipped: false },
+  ]},
+  options: { responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false }, plugins: { legend: { position: 'bottom' }, tooltip: { ...tooltipStyle, mode: 'index', intersect: false, callbacks: { label: c => ` ${c.dataset.label}: $${c.parsed.y.toFixed(2)}M` } } },
+    scales: { x: { grid: { color: GRID }, border: { color: GRID } }, y: { grid: { color: GRID }, border: { color: GRID }, ticks: { callback: v => '$' + v + 'M' } } } }
+});
+
+// Consolidado
 new Chart(document.getElementById('chartConsol'), {
   type: 'doughnut',
-  data: {
-    labels: ['Chile Pepe $102.6M (62.9%)', 'Dulces Micho $57.2M (35.1%)', 'Transformadora $3.3M (2.0%)'],
-    datasets: [{
-      data: [102.62, 57.19, 3.31],
-      backgroundColor: ['rgba(232,184,75,0.85)', 'rgba(94,200,160,0.85)', 'rgba(232,107,94,0.85)'],
-      borderColor: '#121929', borderWidth: 3, hoverOffset: 6,
-    }]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false, cutout: '55%',
-    plugins: {
-      legend: { position: 'bottom', labels: { padding: 10, boxWidth: 10, font: { size: 10 } } },
-      tooltip: { ...tooltipStyle }
-    }
-  }
+  data: { labels: ['Chile Pepe $102.6M (62.9%)', 'Dulces Micho $57.2M (35.1%)', 'Transformadora $3.3M (2.0%)'], datasets: [{ data: [102.62, 57.19, 3.31], backgroundColor: ['rgba(232,184,75,0.85)','rgba(94,200,160,0.85)','rgba(232,107,94,0.85)'], borderColor: '#121929', borderWidth: 3 }] },
+  options: { responsive: true, maintainAspectRatio: false, cutout: '55%', plugins: { legend: { position: 'bottom', labels: { padding: 10, boxWidth: 10, font: { size: 10 } } }, tooltip: { ...tooltipStyle } } }
 });
 </script>
 </body>
